@@ -30,9 +30,8 @@ public class GameProperties
      */
     private static final String COMMA_DELIMITER = ",";
     /**
-     * Min rows required to start the game.
+     * Constant to represent SPACE delimiter
      */
-    private static final int MIN_DIMENSION_REQUIRED = 1;
     private static final String SPACE_DELIMITER = " ";
     /**
      * Depth of the board
@@ -143,7 +142,7 @@ public class GameProperties
 
             //Separate each pieces by splitting with space
             String[] eachPieceStringArray = piecesString.split(SPACE_DELIMITER);
-            LOGGER.debug("initializePieces(): eachPieceString = " + Arrays.deepToString(eachPieceStringArray) + ", length = " + eachPieceStringArray.length);
+            LOGGER.debug("initializePieces(): input text file string = " + Arrays.deepToString(eachPieceStringArray) + ", length = " + eachPieceStringArray.length);
 
             //At least one piece should be available
             if (eachPieceStringArray.length > 0)
@@ -156,19 +155,17 @@ public class GameProperties
                     {
                         String[] pieceLines = piece.split(COMMA_DELIMITER);
 
-                        LOGGER.debug("\ninitializePieces():pieceLines = " + Arrays.deepToString(pieceLines));
+                        LOGGER.debug("\ninitializePieces():piece is = " + Arrays.deepToString(pieceLines));
                         // check if all lines are of same length so that the pieces are of proper size
-                        boolean properPiece = Stream.of(pieceLines).map(String::length).distinct().count() == 1 &&
+                        boolean properPiece = Stream.of(pieceLines).map(x -> x.length()).distinct().count() == 1 &&
                                 Stream.of(pieceLines).allMatch(s -> s.chars().allMatch(ch -> ch == 'X' || ch == '.'));
 
                         if (properPiece)
                         {
-
                             int numOfRows = pieceLines.length;
                             int numOfColumns = (int) pieceLines[0].chars().count();
                             if (numOfColumns > 0)
                             {
-
                                 Piece gamePiece = new Piece(new int[]{numOfRows, numOfColumns});
                                 LOGGER.debug("piece matrix size is " + numOfRows + "x" + numOfColumns);
 
@@ -198,39 +195,34 @@ public class GameProperties
                             }
                             else
                             {
-                                throw new InvalidGamePropertyException("invalid Pieces given with numOfColumns: " + numOfColumns + " check input text file line 3");
+                                throw new InvalidGamePropertyException("invalid Piece : " + piece + " given with numOfColumns: " + numOfColumns + " check input text file line 3");
                             }
                         }
 
                         else
                         {
-                            throw new InvalidGamePropertyException("invalid Pieces given with format other than .X and .: check input text file line 3");
+                            throw new InvalidGamePropertyException("invalid Pieces given with format other than .X and . or different length individual pieces: check input text file line 3");
                         }
                     }
                     else
                     {
-                        throw new InvalidGamePropertyException("invalid Pieces given : " + piece + " check input text file line 3");
+                        throw new InvalidGamePropertyException("Null/Empty individual Piece given : " + piece + " check input text file line 3");
                     }
                 }
             }
             else
             {
-                throw new InvalidGamePropertyException("invalid string " + piecesString + " is given in input text file for piece, check input file line 3");
+                throw new InvalidGamePropertyException("Couldn't get one piece after splitting with space, check input text line 3");
             }
 
             if (eachPieceStringArray.length != this.actualPieces.size())
             {
-                throw new InvalidGamePropertyException("invalid string " + piecesString + " is given in input text file for piece, check input file line 3");
-
-            }
-            else
-            {
-                throw new InvalidGamePropertyException("invalid string " + piecesString + " is given in input text file for piece, check input file line 3");
+                throw new InvalidGamePropertyException("Parsing error for pieces, Pieces string array length " + eachPieceStringArray.length + " and actual pieces size " + actualPieces.size());
             }
         }
         else
         {
-            throw new InvalidGamePropertyException("invalid string " + piecesString + " is given in input text file for piece, check input file line 3");
+            throw new InvalidGamePropertyException("Null or empty piece line in input file line 3");
         }
     }
 

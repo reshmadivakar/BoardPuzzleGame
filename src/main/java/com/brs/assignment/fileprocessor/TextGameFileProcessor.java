@@ -42,19 +42,17 @@ public class TextGameFileProcessor extends AbstractGameFileProcessor
         try
         {
             inputList = Files.readAllLines(Paths.get(absoluteFilePath), StandardCharsets.UTF_8);
-        }
-        catch (IOException e)
+        } catch (IOException e)
         {
             LOGGER.error("IOException occurred  in processFile() " + e);
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
             LOGGER.error("Exception occurred  in processFile() " + e);
         }
         //check if input file is having 3 entries before proceeding
         if (inputList.size() != INPUT_LINES)
         {
-           throw new InvalidGamePropertyException("Input files doesn't contain 3 lines, it contain only "+inputList.size()+" lines");
+            throw new InvalidGamePropertyException("Input files doesn't contain 3 lines, it contain only " + inputList.size() + " lines");
         }
 
         GameProperties gameProperties = new GameProperties();

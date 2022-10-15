@@ -65,7 +65,6 @@ public class Board
             }
             sb.append("\n");
         }
-        sb.append("\n");
         return sb.toString();
     }
 

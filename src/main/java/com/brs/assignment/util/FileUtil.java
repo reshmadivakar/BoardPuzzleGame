@@ -1,5 +1,8 @@
 package com.brs.assignment.util;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +12,11 @@ import java.util.List;
  */
 public class FileUtil
 {
+    /**
+     * Constant for Logging
+     */
+    private static final Logger LOGGER = LogManager.getLogger(FileUtil.class);
+
 
     /**
      * Returns the absolute paths of all files in this folder.
@@ -35,6 +43,10 @@ public class FileUtil
                     }
                 }
             }
+        }
+        else
+        {
+            LOGGER.error("getAllFilePathsInFolder() folder " + folder + " doesn't eist");
         }
         return files;
     }

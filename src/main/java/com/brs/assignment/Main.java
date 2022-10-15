@@ -6,6 +6,7 @@ import com.brs.assignment.fileprocessor.factory.FileProcessorFactory;
 import com.brs.assignment.game.GameProperties;
 import com.brs.assignment.util.FileUtil;
 import com.brs.assignment.util.TimeUtil;
+import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -21,7 +22,7 @@ public class Main
     /**
      * Path where input sample files are stored.
      */
-    private static final String INPUT_SAMPLES_FOLDER_PATH = "resources/samples";
+    private static final String INPUT_SAMPLES_FOLDER_PATH = "/Users/reshma.divakar/projects/BrsBoardPuzzleSolver/src/main/resources/samples";
     /**
      * Constant for Logging
      */
@@ -34,6 +35,7 @@ public class Main
      */
     public static void main(String[] args)
     {
+        BasicConfigurator.configure();
         List<String> filePathsInFolder = FileUtil.getAllFilePathsInFolder(INPUT_SAMPLES_FOLDER_PATH);
 
         if (filePathsInFolder != null && !filePathsInFolder.isEmpty())
@@ -53,19 +55,25 @@ public class Main
                     try
                     {
                         gameProperties = fileProcessor.processFile(fileName);
+                        LOGGER.debug("------------ GAME PROPERTIES READY ------------");
+                        LOGGER.debug("depth = " + gameProperties.getDepth());
+                        LOGGER.debug("board = " + gameProperties.getBoard());
+                        LOGGER.debug("-----------------------------------------------");
+
                     } catch (InvalidGamePropertyException e)
                     {
                         LOGGER.error("Exception: " + e);
                     }
-                    LOGGER.debug("------------ GAME PROPERTIES READY ------------");
-                    LOGGER.debug("depth = " + gameProperties.getDepth());
-                    LOGGER.debug("board = " + gameProperties.getBoard());
-                    LOGGER.debug("-----------------------------------------------");
-                    long endTime = System.currentTimeMillis();
-                    LOGGER.info("Time Taken = " + TimeUtil.convertMillisecondsToHHMMSSFormat(endTime - startTime));
 
                 }
+                long endTime = System.currentTimeMillis();
+                LOGGER.info("Time Taken = " + TimeUtil.convertMillisecondsToHHMMSSFormat(endTime - startTime));
+
             }
+        }
+        else
+        {
+            LOGGER.error(" There are no input files exist at path " + INPUT_SAMPLES_FOLDER_PATH);
         }
     }
 }

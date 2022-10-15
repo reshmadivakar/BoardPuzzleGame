@@ -1,0 +1,3 @@
+3
+000,011,100
+X..,.XX,XX. XX XX XXX X,X XXX,..X
