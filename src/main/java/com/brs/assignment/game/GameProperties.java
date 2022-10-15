@@ -33,6 +33,7 @@ public class GameProperties
      * Min rows required to start the game.
      */
     private static final int MIN_DIMENSION_REQUIRED = 1;
+    private static final String SPACE_DELIMITER = " ";
     /**
      * Depth of the board
      */
@@ -91,10 +92,10 @@ public class GameProperties
                 int numOfRows = boardLines.length;
                 int numOfColumns = (int) boardLines[0].chars().count();
 
-                LOGGER.debug("initializeBoard(): numberOfRows = " + numOfRows+" and numOfColumns = "+numOfColumns);
+                LOGGER.debug("initializeBoard(): numberOfRows = " + numOfRows + " and numOfColumns = " + numOfColumns);
 
-                //At least one row should be there on the board.
-                if (numOfRows >= MIN_DIMENSION_REQUIRED && numOfColumns >= MIN_DIMENSION_REQUIRED)
+                //At least one column should be there.
+                if (numOfColumns > 0)
                 {
                     Board gameBoard = new Board(new int[]{numOfRows, numOfColumns});
 
@@ -109,122 +110,145 @@ public class GameProperties
                             boardMatrix[i][j] = Character.getNumericValue(boardBits[j]);
                         }
                     }
-
                     gameBoard.setBoardMatrix(boardMatrix);
                     this.board = gameBoard;
                 }
-                //At least one row should be there.
                 else
                 {
-                    throw new InvalidGamePropertyException("invalid board matrix size numOfRows: "+numOfRows+" and numOfColumns: "+numOfColumns);
+                    throw new InvalidGamePropertyException("invalid board matrix size numOfRows: " + numOfRows + " and numOfColumns: " + numOfColumns + "check input file line 2");
                 }
             }
             else
             {
-                throw new InvalidGamePropertyException("invalid string "+boardString+" is given in input text file for board");
+                throw new InvalidGamePropertyException("invalid string " + boardString + " is given in input text file for board, check input file line 2");
             }
         }
         //If board string is null or empty handle error scenario.
         else
         {
-            throw new InvalidGamePropertyException("invalid string "+boardString+" is given in input text file for board");
+            throw new InvalidGamePropertyException("invalid string " + boardString + " is given in input text file for board, check input file line 2");
         }
     }
 
     /**
-     * Method to
-     * @param piecesString
+     * Method to initialise the pieces. The below method will read and parse the third line from input text file and split them into string array,
+     * create Piece objects and store them in a list.
+     *
+     * @param piecesString third line from input file.
      */
-    public void initializePieces(String piecesString)
+    public void initializePieces(String piecesString) throws InvalidGamePropertyException
     {
         if (piecesString != null && !piecesString.isEmpty())
         {
 
             //Separate each pieces by splitting with space
-            String[] eachPieceString = piecesString.split(" ");
-            System.out.println("eachPieceString = " + Arrays.deepToString(eachPieceString) + ", length = " + eachPieceString.length);
+            String[] eachPieceStringArray = piecesString.split(SPACE_DELIMITER);
+            LOGGER.debug("initializePieces(): eachPieceString = " + Arrays.deepToString(eachPieceStringArray) + ", length = " + eachPieceStringArray.length);
 
-            // Create a list to hold the pieces.
-            this.actualPieces = new ArrayList<>(eachPieceString.length);
-
-            for (String piece : eachPieceString)
+            //At least one piece should be available
+            if (eachPieceStringArray.length > 0)
             {
-                if (piece != null && !piece.isEmpty())
+                // Create a list to hold the pieces.
+                this.actualPieces = new ArrayList<>(eachPieceStringArray.length);
+                for (String piece : eachPieceStringArray)
                 {
-                    String[] pieceLines = piece.split(",");
-
-                    System.out.println("\npieceLines = " + Arrays.deepToString(pieceLines));
-                    // check if all lines are of same length so that the pieces are of proper size
-                    boolean properPiece = Stream.of(pieceLines).map(String::length).distinct().count() == 1 &&
-                            Stream.of(pieceLines).allMatch(s -> s.chars().allMatch(ch -> ch == 'X' || ch == '.'));
-
-                    if (properPiece)
+                    if (piece != null && !piece.isEmpty())
                     {
+                        String[] pieceLines = piece.split(COMMA_DELIMITER);
 
-                        int numOfRows = pieceLines.length;
-                        int numOfColumns = (int) pieceLines[0].chars().count();
+                        LOGGER.debug("\ninitializePieces():pieceLines = " + Arrays.deepToString(pieceLines));
+                        // check if all lines are of same length so that the pieces are of proper size
+                        boolean properPiece = Stream.of(pieceLines).map(String::length).distinct().count() == 1 &&
+                                Stream.of(pieceLines).allMatch(s -> s.chars().allMatch(ch -> ch == 'X' || ch == '.'));
 
-                        //valid board size
-                        Piece gamePiece = new Piece(new int[]{numOfRows, numOfColumns});
-                        System.out.println("piece matrix size is " + numOfRows + "x" + numOfColumns);
-
-                        int[][] pieceMatrix = gamePiece.getPieceMatrix();
-
-                        for (int i = 0; i < pieceLines.length; i++)
+                        if (properPiece)
                         {
-                            char[] pieceBits = pieceLines[i].toCharArray();
-                            int digit = 0;
-                            for (int j = 0; j < pieceBits.length; j++)
+
+                            int numOfRows = pieceLines.length;
+                            int numOfColumns = (int) pieceLines[0].chars().count();
+                            if (numOfColumns > 0)
                             {
-                                if (pieceBits[j] == 'X')
+
+                                Piece gamePiece = new Piece(new int[]{numOfRows, numOfColumns});
+                                LOGGER.debug("piece matrix size is " + numOfRows + "x" + numOfColumns);
+
+                                int[][] pieceMatrix = gamePiece.getPieceMatrix();
+
+                                for (int i = 0; i < pieceLines.length; i++)
                                 {
-                                    digit = 1;
-                                }
-                                else if (pieceBits[j] == '.')
-                                {
-                                    digit = 0;
+                                    char[] pieceBits = pieceLines[i].toCharArray();
+                                    int digit = 0;
+                                    for (int j = 0; j < pieceBits.length; j++)
+                                    {
+                                        if (pieceBits[j] == 'X')
+                                        {
+                                            digit = 1;
+                                        }
+                                        else if (pieceBits[j] == '.')
+                                        {
+                                            digit = 0;
+                                        }
+
+                                        pieceMatrix[i][j] = digit;
+                                    }
                                 }
 
-                                pieceMatrix[i][j] = digit;
+                                gamePiece.setPieceMatrix(pieceMatrix);
+                                this.actualPieces.add(gamePiece);
+                            }
+                            else
+                            {
+                                throw new InvalidGamePropertyException("invalid Pieces given with numOfColumns: " + numOfColumns + " check input text file line 3");
                             }
                         }
 
-                        gamePiece.setPieceMatrix(pieceMatrix);
-
-                        this.actualPieces.add(gamePiece);
-
+                        else
+                        {
+                            throw new InvalidGamePropertyException("invalid Pieces given with format other than .X and .: check input text file line 3");
+                        }
                     }
-
                     else
                     {
-                        System.out.println("Not proper piece");
-                        // throws board error exception
+                        throw new InvalidGamePropertyException("invalid Pieces given : " + piece + " check input text file line 3");
                     }
                 }
-                else
-                {
-                    // throws board error exception
-                }
-            }
-
-            if (eachPieceString.length != this.actualPieces.size())
-            {
-                System.out.println("Invalid Pieces Found");
-                // throw invalid pieces exception
             }
             else
             {
-                // do nothing
+                throw new InvalidGamePropertyException("invalid string " + piecesString + " is given in input text file for piece, check input file line 3");
             }
+
+            if (eachPieceStringArray.length != this.actualPieces.size())
+            {
+                throw new InvalidGamePropertyException("invalid string " + piecesString + " is given in input text file for piece, check input file line 3");
+
+            }
+            else
+            {
+                throw new InvalidGamePropertyException("invalid string " + piecesString + " is given in input text file for piece, check input file line 3");
+            }
+        }
+        else
+        {
+            throw new InvalidGamePropertyException("invalid string " + piecesString + " is given in input text file for piece, check input file line 3");
         }
     }
 
-
+    /**
+     * Getter for depth of board.
+     *
+     * @return depth
+     */
     public int getDepth()
     {
         return depth;
     }
 
+    /**
+     * Getter for board
+     *
+     * @return board.
+     */
     public Board getBoard()
     {
         return board;
