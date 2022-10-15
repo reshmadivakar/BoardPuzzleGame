@@ -22,7 +22,7 @@ public class Main
     /**
      * Path where input sample files are stored.
      */
-    private static final String INPUT_SAMPLES_FOLDER_PATH = "/Users/reshma.divakar/projects/BrsBoardPuzzleSolver/src/main/resources/samples";
+    private static final String INPUT_SAMPLES_FOLDER_PATH = "src/main/resources/samples";
     /**
      * Constant for Logging
      */
@@ -67,7 +67,7 @@ public class Main
 
                 }
                 long endTime = System.currentTimeMillis();
-                LOGGER.info("Time Taken = " + TimeUtil.convertMillisecondsToHHMMSSFormat(endTime - startTime));
+                LOGGER.info("Time Taken to process = " + TimeUtil.convertMillisecondsToHHMMSSFormat(endTime - startTime));
 
             }
         }
