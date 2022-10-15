@@ -15,5 +15,5 @@ public abstract class AbstractGameFileProcessor
      * @param absoluteFilePath
      * @return Wrapper to hold all the properties needs to be used for the game. Properties are depth, board to use and pieces to place on the board.
      */
-    public abstract GameProperties processFile(String absoluteFilePath) throws InvalidGamePropertyException;
+    public abstract GameProperties processFile(String absoluteFilePath) throws InvalidGamePropertyException, NumberFormatException;
 }

@@ -38,6 +38,15 @@ public class Board
     }
 
     /**
+     * Gets the size of the matrix
+     * @return size
+     */
+    public int[] getSizeOfMatrix()
+    {
+        return sizeOfMatrix;
+    }
+
+    /**
      * API to set the board matrix.
      *
      * @param boardMatrix

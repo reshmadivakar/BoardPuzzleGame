@@ -43,9 +43,6 @@ public class GameProperties
      */
     private Board board;
 
-    /**
-     * List of pieces to place on the board.
-     */
     private List<Piece> actualPieces;
 
     /**
@@ -54,15 +51,11 @@ public class GameProperties
      * @param depth
      * @throws InvalidGamePropertyException
      */
-    public void initializeDepth(String depth) throws InvalidGamePropertyException
+    public void initializeDepth(String depth) throws InvalidGamePropertyException, NumberFormatException
     {
-        try
-        {
-            this.depth = Integer.parseInt(depth);
-        } catch (NumberFormatException exception)
-        {
-            LOGGER.error("Exception in initializeDepth() " + exception);
-        }
+
+        this.depth = Integer.parseInt(depth);
+
         LOGGER.debug("initializeDepth(): board depth = " + depth);
 
         if (this.depth < MIN_DEPTH || this.depth > MAX_DEPTH)
@@ -82,9 +75,12 @@ public class GameProperties
         if (boardString != null && !boardString.isEmpty())
         {
             String[] boardLines = boardString.split(COMMA_DELIMITER);
+            System.out.println("boardlines " + Arrays.deepToString(boardLines));
 
             // check if all lines are of same length so that the board is proper
-            boolean properBoard = Stream.of(boardLines).map(String::length).distinct().count() == 1;
+            boolean properBoard = Stream.of(boardLines).map(String::length).distinct().count() == 1 &&
+                    // no need to handle as case of depth 4 will only need max '3'
+                    Stream.of(boardLines).allMatch(s -> s.chars().allMatch(ch -> ch == '0' || ch == '1' || ch == '2' || ch == '3'));
 
             if (properBoard)
             {
@@ -94,32 +90,26 @@ public class GameProperties
                 LOGGER.debug("initializeBoard(): numberOfRows = " + numOfRows + " and numOfColumns = " + numOfColumns);
 
                 //At least one column should be there.
-                if (numOfColumns > 0)
+                Board gameBoard = new Board(new int[]{numOfRows, numOfColumns});
+
+                int[][] boardMatrix = gameBoard.getBoardMatrix();
+
+                for (int i = 0; i < boardLines.length; i++)
                 {
-                    Board gameBoard = new Board(new int[]{numOfRows, numOfColumns});
-
-                    int[][] boardMatrix = gameBoard.getBoardMatrix();
-
-                    for (int i = 0; i < boardLines.length; i++)
+                    char[] boardBits = boardLines[i].toCharArray();
+                    for (int j = 0; j < boardBits.length; j++)
                     {
-
-                        char[] boardBits = boardLines[i].toCharArray();
-                        for (int j = 0; j < boardBits.length; j++)
-                        {
-                            boardMatrix[i][j] = Character.getNumericValue(boardBits[j]);
-                        }
+                        boardMatrix[i][j] = Character.getNumericValue(boardBits[j]);
                     }
-                    gameBoard.setBoardMatrix(boardMatrix);
-                    this.board = gameBoard;
                 }
-                else
-                {
-                    throw new InvalidGamePropertyException("invalid board matrix size numOfRows: " + numOfRows + " and numOfColumns: " + numOfColumns + "check input file line 2");
-                }
+                //set the board matrix structure
+                gameBoard.setBoardMatrix(boardMatrix);
+                this.board = gameBoard;
+
             }
             else
             {
-                throw new InvalidGamePropertyException("invalid string " + boardString + " is given in input text file for board, check input file line 2");
+                throw new InvalidGamePropertyException("invalid board structure, check input file line 2");
             }
         }
         //If board string is null or empty handle error scenario.
@@ -164,39 +154,33 @@ public class GameProperties
                         {
                             int numOfRows = pieceLines.length;
                             int numOfColumns = (int) pieceLines[0].chars().count();
-                            if (numOfColumns > 0)
+
+                            Piece gamePiece = new Piece(new int[]{numOfRows, numOfColumns});
+                            LOGGER.debug("piece matrix size is " + numOfRows + "x" + numOfColumns);
+
+                            int[][] pieceMatrix = gamePiece.getPieceMatrix();
+
+                            for (int i = 0; i < pieceLines.length; i++)
                             {
-                                Piece gamePiece = new Piece(new int[]{numOfRows, numOfColumns});
-                                LOGGER.debug("piece matrix size is " + numOfRows + "x" + numOfColumns);
-
-                                int[][] pieceMatrix = gamePiece.getPieceMatrix();
-
-                                for (int i = 0; i < pieceLines.length; i++)
+                                char[] pieceBits = pieceLines[i].toCharArray();
+                                int digit = 0;
+                                for (int j = 0; j < pieceBits.length; j++)
                                 {
-                                    char[] pieceBits = pieceLines[i].toCharArray();
-                                    int digit = 0;
-                                    for (int j = 0; j < pieceBits.length; j++)
+                                    if (pieceBits[j] == 'X')
                                     {
-                                        if (pieceBits[j] == 'X')
-                                        {
-                                            digit = 1;
-                                        }
-                                        else if (pieceBits[j] == '.')
-                                        {
-                                            digit = 0;
-                                        }
-
-                                        pieceMatrix[i][j] = digit;
+                                        digit = 1;
                                     }
-                                }
+                                    else if (pieceBits[j] == '.')
+                                    {
+                                        digit = 0;
+                                    }
 
-                                gamePiece.setPieceMatrix(pieceMatrix);
-                                this.actualPieces.add(gamePiece);
+                                    pieceMatrix[i][j] = digit;
+                                }
                             }
-                            else
-                            {
-                                throw new InvalidGamePropertyException("invalid Piece : " + piece + " given with numOfColumns: " + numOfColumns + " check input text file line 3");
-                            }
+
+                            gamePiece.setPieceMatrix(pieceMatrix);
+                            this.actualPieces.add(gamePiece);
                         }
 
                         else
@@ -244,5 +228,13 @@ public class GameProperties
     public Board getBoard()
     {
         return board;
+    }
+
+    /**
+     * List of pieces to place on the board.
+     */
+    public List<Piece> getActualPieces()
+    {
+        return actualPieces;
     }
 }

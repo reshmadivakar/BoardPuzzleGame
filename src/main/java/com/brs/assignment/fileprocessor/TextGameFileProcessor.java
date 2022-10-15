@@ -35,7 +35,7 @@ public class TextGameFileProcessor extends AbstractGameFileProcessor
      * @return Wrapper to hold all the properties needs to be used for the game. Properties are depth, board to use and pieces to place on the board.
      */
     @Override
-    public GameProperties processFile(String absoluteFilePath) throws InvalidGamePropertyException
+    public GameProperties processFile(String absoluteFilePath) throws InvalidGamePropertyException, NumberFormatException
     {
 
         List<String> inputList = Collections.emptyList();

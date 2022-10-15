@@ -1,7 +1,7 @@
 package com.brs.assignment.exception;
 
 /**
- * Custom defined exception to be thrown when invalid game properties are entered in to the file.
+ * Custom defined exception to be thrown when invalid game properties are entered in to the input text file.
  */
 public class InvalidGamePropertyException extends Exception
 {
