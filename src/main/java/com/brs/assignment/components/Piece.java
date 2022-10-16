@@ -1,9 +1,13 @@
 package com.brs.assignment.components;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Class to represent the game pieces. This will hold an int[] to represent the size of the pieces and two dimensional array to represent the
  * piece matrix.
  */
-public class Piece
+public class Piece implements Comparable<Piece>
 {
     /**
      * To hold the dimension of the piece ie num of rows and num of columns.
@@ -13,6 +17,11 @@ public class Piece
      * To hold the board values.
      */
     private int[][] pieceMatrix;
+    /**
+     * To hold the list of coordinates where this piece can be placed
+     */
+    private List<PieceCoordinate> possibleCoordinates = new ArrayList<>();
+
 
     /**
      * Constructor
@@ -24,6 +33,17 @@ public class Piece
         this.sizeOfMatrix = sizeOfMatrix;
         this.pieceMatrix = new int[sizeOfMatrix[0]][sizeOfMatrix[1]];
     }
+
+    /**
+     * Gets the size of matrix.
+     *
+     * @return sizeOfMatrix
+     */
+    public int[] getSizeOfMatrix()
+    {
+        return sizeOfMatrix;
+    }
+
 
     /**
      * API to get the piece matrix
@@ -47,6 +67,7 @@ public class Piece
 
     /**
      * To print the piece values.
+     *
      * @return
      */
     @Override
@@ -65,4 +86,18 @@ public class Piece
         return sb.toString();
     }
 
+    /**
+     * To hold the list of coordinates where this piece can be placed
+     */
+    public List<PieceCoordinate> getPossibleCoordinates()
+    {
+        return possibleCoordinates;
+    }
+
+
+    @Override
+    public int compareTo(Piece o)
+    {
+        return this.getPossibleCoordinates().size() < o.getPossibleCoordinates().size() ? -1 : 1;
+    }
 }

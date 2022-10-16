@@ -3,7 +3,11 @@ package com.brs.assignment;
 import com.brs.assignment.exception.InvalidGamePropertyException;
 import com.brs.assignment.fileprocessor.AbstractGameFileProcessor;
 import com.brs.assignment.fileprocessor.factory.FileProcessorFactory;
+import com.brs.assignment.game.Game;
 import com.brs.assignment.game.GameProperties;
+import com.brs.assignment.game.GameResult;
+import com.brs.assignment.strategy.GameStrategy;
+import com.brs.assignment.strategy.DepthFirstCheckStrategy;
 import com.brs.assignment.util.FileUtil;
 import com.brs.assignment.util.TimeUtil;
 import org.apache.log4j.BasicConfigurator;
@@ -44,6 +48,11 @@ public class Main
 
             for (String fileName : filePathsInFolder)
             {
+                //TODO: Remove the below once code is fixed
+                if (!fileName.endsWith("001.txt"))
+                {
+                    continue;
+                }
                 long startTime = System.currentTimeMillis();
 
                 LOGGER.debug("main(): processing input file  = " + fileName);
@@ -51,7 +60,7 @@ public class Main
                 AbstractGameFileProcessor fileProcessor = FileProcessorFactory.getFileProcessor(fileName);
                 if (fileProcessor != null)
                 {
-                    GameProperties gameProperties = null;
+                    GameProperties gameProperties;
                     try
                     {
                         gameProperties = fileProcessor.processFile(fileName);
@@ -60,11 +69,16 @@ public class Main
                         LOGGER.debug("board = " + gameProperties.getBoard());
                         LOGGER.debug("-----------------------------------------------");
 
+                        //Choose the game strategy
+                        GameStrategy gameStrategy = new DepthFirstCheckStrategy();
+                        Game game = new Game(gameProperties, gameStrategy);
+                        //start the game
+                        GameResult solve = game.solve();
+
                     } catch (InvalidGamePropertyException e)
                     {
                         LOGGER.error("Exception: " + e);
                     }
-
                 }
                 long endTime = System.currentTimeMillis();
                 LOGGER.info("Time Taken to process = " + TimeUtil.convertMillisecondsToHHMMSSFormat(endTime - startTime));

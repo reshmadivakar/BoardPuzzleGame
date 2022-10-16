@@ -1,5 +1,9 @@
 package com.brs.assignment.components;
 
+import com.brs.assignment.util.ArrayUtil;
+
+import java.util.Deque;
+
 /**
  * Class to represent the game board. This will hold an int[] to represent the size of the board and two dimensional array to represent the
  * board matrix.
@@ -15,6 +19,9 @@ public class Board
      * To hold the board values.
      */
     private int[][] boardMatrix;
+
+    private Deque<Piece> availablePieces;
+
 
     /**
      * Constructor
@@ -77,4 +84,17 @@ public class Board
         return sb.toString();
     }
 
+    public Deque<Piece> getAvailablePieces()
+    {
+        return availablePieces;
+    }
+
+    public void setAvailablePieces(Deque<Piece> availablePieces)
+    {
+        this.availablePieces = availablePieces;
+    }
+    public boolean isCleanBoard()
+    {
+        return ArrayUtil.allAreZeros(boardMatrix);
+    }
 }
