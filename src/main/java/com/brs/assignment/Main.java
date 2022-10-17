@@ -48,14 +48,9 @@ public class Main
 
             for (String fileName : filePathsInFolder)
             {
-                //TODO: Remove the below once code is fixed
-                if (!fileName.endsWith("002.txt"))
-                {
-                    continue;
-                }
                 long startTime = System.currentTimeMillis();
 
-                LOGGER.debug("main(): processing input file  = " + fileName);
+                LOGGER.info("main(): processing input file  = " + fileName);
 
                 AbstractGameFileProcessor fileProcessor = FileProcessorFactory.getFileProcessor(fileName);
                 if (fileProcessor != null)
@@ -75,10 +70,11 @@ public class Main
                         //start the game
                         GameResult gameResult = game.solve();
 
-                        LOGGER.debug("=========  Printing GAME RESULT  ==========");
+                        LOGGER.info("=========  Printing GAME RESULT  ==========");
                         LOGGER.debug("successful coordinates in order are below ");
                         int[][] resultCoordinates = gameResult.getPieceCoordinatesInOrder();
-                        StringBuilder stringBuilder = new StringBuilder("[");
+                        StringBuilder stringBuilder = new StringBuilder();
+                        stringBuilder.append("\t\t");
                         for (int i = 0; i < resultCoordinates.length; i++)
                         {
                             int[] coordinate = resultCoordinates[i];
@@ -86,12 +82,11 @@ public class Main
                             //don't print the space for last item
                             if (i < resultCoordinates.length - 1)
                             {
-                                stringBuilder.append(" ");
+                                stringBuilder.append("  ");
                             }
                         }
-                        stringBuilder.append("]");
-                        LOGGER.debug(stringBuilder.toString());
-                        LOGGER.debug("=========  ==================== ===========");
+                        LOGGER.info(stringBuilder.toString());
+                        LOGGER.info("=========  ==================== ===========");
 
 
                     } catch (InvalidGamePropertyException e)

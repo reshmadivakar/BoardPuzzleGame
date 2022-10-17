@@ -75,7 +75,7 @@ public class GameProperties
         if (boardString != null && !boardString.isEmpty())
         {
             String[] boardLines = boardString.split(COMMA_DELIMITER);
-            System.out.println("boardlines " + Arrays.deepToString(boardLines));
+            LOGGER.trace("boardlines " + Arrays.deepToString(boardLines));
 
             // check if all lines are of same length so that the board is proper
             boolean properBoard = Stream.of(boardLines).map(String::length).distinct().count() == 1 &&
