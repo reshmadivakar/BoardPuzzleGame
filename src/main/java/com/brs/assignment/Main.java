@@ -73,7 +73,20 @@ public class Main
                         GameStrategy gameStrategy = new DepthFirstCheckStrategy();
                         Game game = new Game(gameProperties, gameStrategy);
                         //start the game
-                        GameResult solve = game.solve();
+                        GameResult gameResult = game.solve();
+
+                        LOGGER.debug("=========  Printing GAME RESULT  ==========");
+                        LOGGER.debug("successful coordinates in order are below ");
+                        int[][] resultCoordinates = gameResult.getPieceCoordinatesInOrder();
+                        StringBuilder stringBuilder = new StringBuilder("[");
+                        for (int[] coordinate: resultCoordinates)
+                        {
+                            stringBuilder.append(coordinate[0]+","+coordinate[1]+" ");
+                        }
+                        stringBuilder.append("]");
+                        LOGGER.debug(stringBuilder.toString());
+                        LOGGER.debug("=========  ==================== ===========");
+
 
                     } catch (InvalidGamePropertyException e)
                     {

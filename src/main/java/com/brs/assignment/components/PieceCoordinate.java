@@ -5,11 +5,19 @@ package com.brs.assignment.components;
  */
 public class PieceCoordinate
 {
+    /**
+     * x coordinate value
+     */
     private int x;
+
+    /**
+     * y coordinate value
+     */
     private int y;
 
     /**
      * constructor
+     *
      * @param x
      * @param y
      */
@@ -21,6 +29,7 @@ public class PieceCoordinate
 
     /**
      * Getter method for x coordinate
+     *
      * @return x
      */
     public int getX()
@@ -30,6 +39,7 @@ public class PieceCoordinate
 
     /**
      * Getter for y coordinate.
+     *
      * @return y
      */
     public int getY()
@@ -39,6 +49,7 @@ public class PieceCoordinate
 
     /**
      * To string method to display x and y.
+     *
      * @return
      */
     @Override

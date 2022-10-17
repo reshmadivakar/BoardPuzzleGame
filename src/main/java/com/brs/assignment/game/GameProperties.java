@@ -139,8 +139,9 @@ public class GameProperties
             {
                 // Create a list to hold the pieces.
                 this.actualPieces = new ArrayList<>(eachPieceStringArray.length);
-                for (String piece : eachPieceStringArray)
+                for (int index = 0; index < eachPieceStringArray.length; index++)
                 {
+                    String piece = eachPieceStringArray[index];
                     if (piece != null && !piece.isEmpty())
                     {
                         String[] pieceLines = piece.split(COMMA_DELIMITER);
@@ -178,7 +179,7 @@ public class GameProperties
                                     pieceMatrix[i][j] = digit;
                                 }
                             }
-
+                            gamePiece.setIndex(index);
                             gamePiece.setPieceMatrix(pieceMatrix);
                             this.actualPieces.add(gamePiece);
                         }

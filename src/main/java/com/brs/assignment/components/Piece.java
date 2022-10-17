@@ -21,7 +21,10 @@ public class Piece implements Comparable<Piece>
      * To hold the list of coordinates where this piece can be placed
      */
     private List<PieceCoordinate> possibleCoordinates = new ArrayList<>();
-
+    /**
+     * To hold the index of the Piece in input file.
+     */
+    private int index;
 
     /**
      * Constructor
@@ -99,5 +102,18 @@ public class Piece implements Comparable<Piece>
     public int compareTo(Piece o)
     {
         return this.getPossibleCoordinates().size() < o.getPossibleCoordinates().size() ? -1 : 1;
+    }
+
+    /**
+     * To hold the index of the Piece in input file.
+     */
+    public int getIndex()
+    {
+        return index;
+    }
+
+    public void setIndex(int index)
+    {
+        this.index = index;
     }
 }

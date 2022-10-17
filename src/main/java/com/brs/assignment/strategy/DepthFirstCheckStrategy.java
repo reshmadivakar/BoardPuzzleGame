@@ -57,7 +57,7 @@ public class DepthFirstCheckStrategy extends GameStrategy
 
                 // storing in the reverse order so that the coordinate and piece matches
                 Collections.reverse(actualPieces);
-                gameResult.getPieces().addAll(actualPieces);
+                gameResult.getPieceList().addAll(actualPieces);
             }
 
             List<BoardSizePiece> boardsAfterApplyingPiece = getBoardsAfterApplyingPiece(gameProperties.getDepth(), board);
@@ -75,9 +75,12 @@ public class DepthFirstCheckStrategy extends GameStrategy
     }
 
     /**
+     * The below method will apply the piece in the base board passed to it in all the possible coordinates and construct the new list of boards.
+     * After applying last piece(when it reach leaf node) it will check if all bits are zero in board. If so it will return and won't push to stack.
+     *
      * @param depth
      * @param board
-     * @return
+     * @return List of Board Size Piece after applying pieces.
      */
     private List<BoardSizePiece> getBoardsAfterApplyingPiece(int depth, Board board)
     {

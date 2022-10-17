@@ -68,7 +68,7 @@ public abstract class GameStrategy
                     piece.getPossibleCoordinates().add(new PieceCoordinate(i, j));
                 }
             }
-            LOGGER.debug("buildPieceCoordinates(): Coordinates for Piece "+piece+" is "+ Arrays.deepToString(piece.getPossibleCoordinates().toArray()));
+            LOGGER.debug("buildPieceCoordinates(): Coordinates for Piece " + piece + " is " + Arrays.deepToString(piece.getPossibleCoordinates().toArray()));
         }
 
         // sort based on the available coordinates size ASC - means lowest available movements will be at the top
@@ -88,10 +88,11 @@ public abstract class GameStrategy
 
     /**
      * Construct the board after applying piece.
+     *
      * @param board
      * @param pc
      * @param boardMatrix
-     * @return
+     * @return BoardSizePiece
      */
     public BoardSizePiece constructBoardSizePiece(Board board, PieceCoordinate pc, int[][] boardMatrix)
     {

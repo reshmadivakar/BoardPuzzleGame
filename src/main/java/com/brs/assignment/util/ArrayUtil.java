@@ -1,7 +1,16 @@
 package com.brs.assignment.util;
 
+/**
+ * Util class added for handling array operations.
+ */
 public class ArrayUtil
 {
+    /**
+     * API to perform array copy
+     *
+     * @param src source array
+     * @return copied array
+     */
     public static int[][] copyArray(int[][] src)
     {
         int[][] copyIntArr = new int[src.length][];
@@ -15,7 +24,12 @@ public class ArrayUtil
         return copyIntArr;
     }
 
-
+    /**
+     * API to check if all the elements of the two dimensional array are zeros
+     *
+     * @param boardMatrix
+     * @return true if all are zero
+     */
     public static boolean allAreZeros(int[][] boardMatrix)
     {
         for (int i = 0; i < boardMatrix.length; i++)
@@ -31,22 +45,4 @@ public class ArrayUtil
         return true;
     }
 
-    public static int diffBetweenMatrix(int[][] a, int[][] b)
-    {
-        int diff = 0;
-        if(a.length == b.length && a[0].length == b[0].length)
-        {
-            for (int i = 0; i < a.length; i++)
-            {
-                for (int j = 0; j < a[0].length; j++)
-                {
-                    if (a[i][j] != b[i][j])
-                    {
-                        diff += 1;
-                    }
-                }
-            }
-        }
-        return diff;
-    }
 }

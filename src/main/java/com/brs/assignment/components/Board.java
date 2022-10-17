@@ -93,8 +93,5 @@ public class Board
     {
         this.availablePieces = availablePieces;
     }
-    public boolean isCleanBoard()
-    {
-        return ArrayUtil.allAreZeros(boardMatrix);
-    }
+
 }

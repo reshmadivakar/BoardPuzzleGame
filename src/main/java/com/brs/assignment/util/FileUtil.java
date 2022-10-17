@@ -46,7 +46,7 @@ public class FileUtil
         }
         else
         {
-            LOGGER.error("getAllFilePathsInFolder() folder " + folder + " doesn't eist");
+            LOGGER.error("getAllFilePathsInFolder() folder " + folder + " doesn't exist");
         }
         return files;
     }
