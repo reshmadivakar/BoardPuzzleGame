@@ -58,7 +58,9 @@ public class DepthFirstCheckStrategy extends GameStrategy
                 // storing in the reverse order so that the coordinate and piece matches
                 Collections.reverse(actualPieces);
                 gameResult.getPieceList().addAll(actualPieces);
+                break;
             }
+
 
             List<BoardSizePiece> boardsAfterApplyingPiece = getBoardsAfterApplyingPiece(gameProperties.getDepth(), board);
 

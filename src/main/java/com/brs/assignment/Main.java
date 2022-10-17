@@ -6,8 +6,8 @@ import com.brs.assignment.fileprocessor.factory.FileProcessorFactory;
 import com.brs.assignment.game.Game;
 import com.brs.assignment.game.GameProperties;
 import com.brs.assignment.game.GameResult;
-import com.brs.assignment.strategy.GameStrategy;
 import com.brs.assignment.strategy.DepthFirstCheckStrategy;
+import com.brs.assignment.strategy.GameStrategy;
 import com.brs.assignment.util.FileUtil;
 import com.brs.assignment.util.TimeUtil;
 import org.apache.log4j.BasicConfigurator;
@@ -49,7 +49,7 @@ public class Main
             for (String fileName : filePathsInFolder)
             {
                 //TODO: Remove the below once code is fixed
-                if (!fileName.endsWith("001.txt"))
+                if (!fileName.endsWith("002.txt"))
                 {
                     continue;
                 }
@@ -79,9 +79,15 @@ public class Main
                         LOGGER.debug("successful coordinates in order are below ");
                         int[][] resultCoordinates = gameResult.getPieceCoordinatesInOrder();
                         StringBuilder stringBuilder = new StringBuilder("[");
-                        for (int[] coordinate: resultCoordinates)
+                        for (int i = 0; i < resultCoordinates.length; i++)
                         {
-                            stringBuilder.append(coordinate[0]+","+coordinate[1]+" ");
+                            int[] coordinate = resultCoordinates[i];
+                            stringBuilder.append(coordinate[0] + "," + coordinate[1]);
+                            //don't print the space for last item
+                            if (i < resultCoordinates.length - 1)
+                            {
+                                stringBuilder.append(" ");
+                            }
                         }
                         stringBuilder.append("]");
                         LOGGER.debug(stringBuilder.toString());
