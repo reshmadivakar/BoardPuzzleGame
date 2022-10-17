@@ -8,10 +8,7 @@ import org.junit.jupiter.api.io.TempDir;
 import java.io.File;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
-import java.util.Arrays;
-import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
@@ -36,8 +33,7 @@ class FileUtilTest
             path1 = tempDir.resolve("testfile1.txt");
             path2 = tempDir.resolve("testfile2.csv");
             path3 = tempDir.resolve("testfile3.json");
-        }
-        catch (InvalidPathException ipe)
+        } catch (InvalidPathException ipe)
         {
             System.err.println("error creating temporary test file in " + this.getClass().getSimpleName());
         }

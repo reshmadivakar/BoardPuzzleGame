@@ -20,7 +20,6 @@ public class Game
      * Constructor
      *
      * @param gameProperties
-     *
      * @param gameStrategy
      */
     public Game(GameProperties gameProperties, GameStrategy gameStrategy)

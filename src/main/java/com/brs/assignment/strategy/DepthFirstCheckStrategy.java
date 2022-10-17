@@ -11,6 +11,10 @@ import com.brs.assignment.util.ArrayUtil;
 import java.util.*;
 
 /**
+ * Depth first strategy will find all the possible coordinates for each piece. Then it will sort the pieces based on the number of movements possible for each piece.
+ * The piece with minimum number of coordinates will be applied on board first. If there are n number of coordinates possible for the board, then it will generate
+ * n new boards. Then it will choose the next piece and apply each of them on this boards. This will continue until the leaf node is reached. After applying the last
+ * piece coordinates whenever the board becomes zero, traversing will stop and return the successful combination.
  *
  */
 public class DepthFirstCheckStrategy extends GameStrategy
@@ -19,6 +23,7 @@ public class DepthFirstCheckStrategy extends GameStrategy
      * Execute the game strategy in depth first order.
      *
      * @param gameProperties
+     *
      * @return game result object having coordinates of each pieces to place on board.
      */
     public GameResult executeStrategy(GameProperties gameProperties)

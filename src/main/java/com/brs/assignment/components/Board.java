@@ -1,7 +1,5 @@
 package com.brs.assignment.components;
 
-import com.brs.assignment.util.ArrayUtil;
-
 import java.util.Deque;
 
 /**
@@ -45,15 +43,6 @@ public class Board
     }
 
     /**
-     * Gets the size of the matrix
-     * @return size
-     */
-    public int[] getSizeOfMatrix()
-    {
-        return sizeOfMatrix;
-    }
-
-    /**
      * API to set the board matrix.
      *
      * @param boardMatrix
@@ -61,6 +50,16 @@ public class Board
     public void setBoardMatrix(int[][] boardMatrix)
     {
         this.boardMatrix = boardMatrix;
+    }
+
+    /**
+     * Gets the size of the matrix
+     *
+     * @return size
+     */
+    public int[] getSizeOfMatrix()
+    {
+        return sizeOfMatrix;
     }
 
     /**
@@ -84,11 +83,21 @@ public class Board
         return sb.toString();
     }
 
+    /**
+     * Getter for available pieces
+     *
+     * @return availablePieces
+     */
     public Deque<Piece> getAvailablePieces()
     {
         return availablePieces;
     }
 
+    /**
+     * Setter for available pieces.
+     *
+     * @param availablePieces
+     */
     public void setAvailablePieces(Deque<Piece> availablePieces)
     {
         this.availablePieces = availablePieces;

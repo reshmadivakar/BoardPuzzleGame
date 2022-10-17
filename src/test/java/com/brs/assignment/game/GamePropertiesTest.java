@@ -4,10 +4,8 @@ import com.brs.assignment.components.Board;
 import com.brs.assignment.components.Piece;
 import com.brs.assignment.exception.InvalidGamePropertyException;
 import org.apache.log4j.BasicConfigurator;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import sun.jvm.hotspot.utilities.Assert;
 
 import java.util.List;
 
@@ -26,9 +24,9 @@ class GamePropertiesTest
         BasicConfigurator.configure();
         GameProperties gameProperties = new GameProperties();
         gameProperties.initializeDepth("2");
-        assertEquals(2,gameProperties.getDepth());
+        assertEquals(2, gameProperties.getDepth());
         gameProperties.initializeDepth("4");
-        assertEquals(4,gameProperties.getDepth());
+        assertEquals(4, gameProperties.getDepth());
     }
 
     @Test
@@ -60,16 +58,16 @@ class GamePropertiesTest
         GameProperties gameProperties = new GameProperties();
         gameProperties.initializeBoard(boardString);
         Board actualBoard = gameProperties.getBoard();
-        assertTrue(actualBoard!=null);
+        assertTrue(actualBoard != null);
         int[][] boardMatrix = actualBoard.getBoardMatrix();
-        assertTrue(boardMatrix!=null);
-        assertEquals(actualBoard.getSizeOfMatrix()[0],3 );
-        assertEquals(actualBoard.getSizeOfMatrix()[1],3 );
+        assertTrue(boardMatrix != null);
+        assertEquals(actualBoard.getSizeOfMatrix()[0], 3);
+        assertEquals(actualBoard.getSizeOfMatrix()[1], 3);
         for (int i = 0; i < actualBoard.getSizeOfMatrix()[0]; i++)
         {
             for (int j = 0; j < actualBoard.getSizeOfMatrix()[1]; j++)
             {
-                assertEquals(1,boardMatrix[i][j]);
+                assertEquals(1, boardMatrix[i][j]);
             }
         }
     }
@@ -84,13 +82,13 @@ class GamePropertiesTest
         Throwable exception1 = assertThrows(InvalidGamePropertyException.class, () -> gameProperties.initializeBoard(boardString1));
         assertEquals("invalid string " + boardString1 + " is given in input text file for board, check input file line 2", exception1.getMessage());
         Board actualBoard = gameProperties.getBoard();
-        assertTrue(actualBoard==null);
+        assertTrue(actualBoard == null);
         //Test for null
         String boardString2 = null;
         Throwable exception2 = assertThrows(InvalidGamePropertyException.class, () -> gameProperties.initializeBoard(boardString2));
         assertEquals("invalid string " + boardString2 + " is given in input text file for board, check input file line 2", exception2.getMessage());
         actualBoard = gameProperties.getBoard();
-        assertTrue(actualBoard==null);
+        assertTrue(actualBoard == null);
 
     }
 
@@ -104,14 +102,14 @@ class GamePropertiesTest
         Throwable exception1 = assertThrows(InvalidGamePropertyException.class, () -> gameProperties.initializeBoard(boardString1));
         assertEquals("invalid board structure, check input file line 2", exception1.getMessage());
         Board actualBoard = gameProperties.getBoard();
-        assertTrue(actualBoard==null);
+        assertTrue(actualBoard == null);
 
         //Test2
         String boardString2 = "110,,1000";
         Throwable exception2 = assertThrows(InvalidGamePropertyException.class, () -> gameProperties.initializeBoard(boardString2));
         assertEquals("invalid board structure, check input file line 2", exception2.getMessage());
         actualBoard = gameProperties.getBoard();
-        assertTrue(actualBoard==null);
+        assertTrue(actualBoard == null);
 
     }
 
@@ -147,13 +145,13 @@ class GamePropertiesTest
         String pieceString1 = "";
         GameProperties gameProperties = new GameProperties();
         Throwable exception1 = assertThrows(InvalidGamePropertyException.class, () -> gameProperties.initializePieces(pieceString1));
-        assertEquals("Null or empty piece line in input file line 3",exception1.getMessage());
-        assertTrue(gameProperties.getActualPieces()==null);
+        assertEquals("Null or empty piece line in input file line 3", exception1.getMessage());
+        assertTrue(gameProperties.getActualPieces() == null);
         //Test for null
         String pieceString2 = null;
         Throwable exception2 = assertThrows(InvalidGamePropertyException.class, () -> gameProperties.initializePieces(pieceString2));
-        assertEquals("Null or empty piece line in input file line 3",exception2.getMessage());
-        assertTrue(gameProperties.getActualPieces()==null);
+        assertEquals("Null or empty piece line in input file line 3", exception2.getMessage());
+        assertTrue(gameProperties.getActualPieces() == null);
     }
 
     @Test
@@ -164,28 +162,28 @@ class GamePropertiesTest
         GameProperties gameProperties = new GameProperties();
         gameProperties.initializePieces(pieceString);
         List<Piece> pieceList = gameProperties.getActualPieces();
-        assertTrue(pieceList!=null);
-        assertTrue(pieceList.size()==3);
+        assertTrue(pieceList != null);
+        assertTrue(pieceList.size() == 3);
         Piece piece = pieceList.get(0);
-        assertEquals(1,piece.getPieceMatrix()[0][0]);
-        assertEquals(1,piece.getPieceMatrix()[0][1]);
-        assertEquals(0,piece.getPieceMatrix()[1][0]);
-        assertEquals(0,piece.getPieceMatrix()[1][1]);
+        assertEquals(1, piece.getPieceMatrix()[0][0]);
+        assertEquals(1, piece.getPieceMatrix()[0][1]);
+        assertEquals(0, piece.getPieceMatrix()[1][0]);
+        assertEquals(0, piece.getPieceMatrix()[1][1]);
 
         piece = pieceList.get(1);
-        assertEquals(1,piece.getPieceMatrix()[0][0]);
-        assertEquals(0,piece.getPieceMatrix()[0][1]);
+        assertEquals(1, piece.getPieceMatrix()[0][0]);
+        assertEquals(0, piece.getPieceMatrix()[0][1]);
 
         piece = pieceList.get(2);
-        assertEquals(0,piece.getPieceMatrix()[0][0]);
-        assertEquals(0,piece.getPieceMatrix()[0][1]);
-        assertEquals(0,piece.getPieceMatrix()[0][2]);
-        assertEquals(1,piece.getPieceMatrix()[1][0]);
-        assertEquals(0,piece.getPieceMatrix()[1][1]);
-        assertEquals(1,piece.getPieceMatrix()[1][2]);
-        assertEquals(0,piece.getPieceMatrix()[2][0]);
-        assertEquals(0,piece.getPieceMatrix()[2][1]);
-        assertEquals(0,piece.getPieceMatrix()[2][2]);
+        assertEquals(0, piece.getPieceMatrix()[0][0]);
+        assertEquals(0, piece.getPieceMatrix()[0][1]);
+        assertEquals(0, piece.getPieceMatrix()[0][2]);
+        assertEquals(1, piece.getPieceMatrix()[1][0]);
+        assertEquals(0, piece.getPieceMatrix()[1][1]);
+        assertEquals(1, piece.getPieceMatrix()[1][2]);
+        assertEquals(0, piece.getPieceMatrix()[2][0]);
+        assertEquals(0, piece.getPieceMatrix()[2][1]);
+        assertEquals(0, piece.getPieceMatrix()[2][2]);
 
     }
 
@@ -196,10 +194,10 @@ class GamePropertiesTest
         String pieceString = " ";
         GameProperties gameProperties = new GameProperties();
         Throwable exception = assertThrows(InvalidGamePropertyException.class, () -> gameProperties.initializePieces(pieceString));
-        assertEquals("Couldn't get one piece after splitting with space, check input text line 3",exception.getMessage());
+        assertEquals("Couldn't get one piece after splitting with space, check input text line 3", exception.getMessage());
 
         List<Piece> pieceList = gameProperties.getActualPieces();
-        assertTrue(pieceList==null);
+        assertTrue(pieceList == null);
 
     }
 

@@ -112,6 +112,11 @@ public class Piece implements Comparable<Piece>
         return index;
     }
 
+    /**
+     * Setter for index which will be used to re order the results based on inputs.
+     *
+     * @param index
+     */
     public void setIndex(int index)
     {
         this.index = index;

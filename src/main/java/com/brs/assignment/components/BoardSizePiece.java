@@ -2,7 +2,7 @@ package com.brs.assignment.components;
 
 /**
  * Class to represent a board created after applying a piece. This will also store the details of the coordinates
- * where the piece has been applied and previous board piece.
+ * where the piece has been applied and parent board piece.
  */
 public class BoardSizePiece extends Board
 {
@@ -47,6 +47,7 @@ public class BoardSizePiece extends Board
 
     /**
      * Getter for parent board piece
+     *
      * @return parent
      */
     public BoardSizePiece getParent()
@@ -56,6 +57,7 @@ public class BoardSizePiece extends Board
 
     /**
      * Setter for parent board piece.
+     *
      * @param parent
      */
     public void setParent(BoardSizePiece parent)
