@@ -11,15 +11,32 @@ Approach used here will generate all the possible combinations of pieces and app
 * Step 4: Get the parent pieces and all their coordinates applied to get the final off board.
 * Step 5: Display the result coordinates in same order as input text file.
 
-## Developer notes.
-The above approach is not an optimized approach as it uses all the possible combinations of pieces to find out the final solution. As the board size and 
-number of pieces increases the time to find out the final solution will also increases accordingly. Below is the comparsion of data received by executing various sample input files.
+## How to run
+* Make sure you have Java 8 or above installed in the machine
+* Checkout the code from the repo
+* Run ``` mvn clean install ``` to build the project
+* Then run ``` mvn compile exec:java -Dexec.mainClass="com.brs.assignment.Main" ``` to execute the program.
+* The solution gets printed in the terminal between the below given lines as shown below:
+ ```
+ =========  Printing GAME RESULT  ==========
+ ANSWERS
+ =========  ==================== ===========
+```
 
-| boardsize     | number of pieces | time taken in HHMMSS
-| ---      | ---       | ---
-| 3 x 3 |    7      | 00:00:00
-| 4 x 4     | 7        | 00:00:00
-| 6 x 4 | 11       | 00:02:22
-| 5 x 6     | 11       |00:07:15
-| 4 x 6		| 12		|00:53:18
-       
+## Solution
+| boardsize | depth    | number of pieces | number of possibilities | time taken in hh:mm:ss | solution
+| ---   |---     | ---       | --- |-- |---
+| 3 * 3 | 2 | 7  |  576 | 00:00:00 |0,0  1,0  1,0  0,0  1,0  1,0  0,1
+| 4 * 4 | 2 | 7  |  186624.0   | 00:00:00 |1,0  0,1  0,1  2,2  1,0  1,0  0,2
+| 6 * 4 | 3 | 11 |  5.59872 x 10<sup>8</sup>   | 00:02:22 |0,0  1,3  0,2  2,0  1,0  0,4  1,2  0,0  0,0  0,2  1,0
+| 5 * 6 | 3 | 11 |  2.985984 x 10<sup>8</sup>   |00:07:15 |1,0  3,2  0,0  2,0  0,0  0,0  0,0  1,2  0,0  2,1  3,0
+| 4 * 6 | 3 | 12 |  4.2467328 x 10<sup>10</sup>	|00:53:18 |2,0  3,1  0,0  4,0  2,3  1,0  0,1  3,2  1,0  2,1  0,0  1,0
+| 7 * 5 | 4 | 12 |  1.492992 x 10<sup>11</sup>	|01:15:07 | 1,0  0,2  0,3  0,3  0,0  0,2  2,3  2,3  0,1  1,2  0,0  0,1
+
+## Developer notes
+The above approach is not an optimized approach as it uses all the possible combinations of pieces to find out the final solution. As the board size and 
+number of pieces increases the time to find out the final solution will also increases accordingly. Above is the comparsion of data received by executing various sample input files. The last few files will take a long time to generate solutions using the current strategy as the possibilities are very high.
+
+## Further Work
+We need to create a strategy where we can do some early elimination of the nodes or some matrix mathematics based apporach.
+ 
