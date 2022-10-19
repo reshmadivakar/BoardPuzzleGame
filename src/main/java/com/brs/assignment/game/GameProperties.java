@@ -146,7 +146,7 @@ public class GameProperties
                     {
                         String[] pieceLines = piece.split(COMMA_DELIMITER);
 
-                        LOGGER.debug("\ninitializePieces():piece is = " + Arrays.deepToString(pieceLines));
+                        LOGGER.trace("\ninitializePieces():piece is = " + Arrays.deepToString(pieceLines));
                         // check if all lines are of same length so that the pieces are of proper size
                         boolean properPiece = Stream.of(pieceLines).map(x -> x.length()).distinct().count() == 1 &&
                                 Stream.of(pieceLines).allMatch(s -> s.chars().allMatch(ch -> ch == 'X' || ch == '.'));
@@ -157,7 +157,7 @@ public class GameProperties
                             int numOfColumns = (int) pieceLines[0].chars().count();
 
                             Piece gamePiece = new Piece(new int[]{numOfRows, numOfColumns});
-                            LOGGER.debug("piece matrix size is " + numOfRows + "x" + numOfColumns);
+                            LOGGER.trace("piece matrix size is " + numOfRows + "x" + numOfColumns);
 
                             int[][] pieceMatrix = gamePiece.getPieceMatrix();
 

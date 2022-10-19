@@ -68,7 +68,7 @@ public abstract class GameStrategy
                     piece.getPossibleCoordinates().add(new PieceCoordinate(i, j));
                 }
             }
-            LOGGER.debug("buildPieceCoordinates(): Coordinates for Piece " + piece + " is " + Arrays.deepToString(piece.getPossibleCoordinates().toArray()));
+            LOGGER.trace("buildPieceCoordinates(): Coordinates for Piece " + piece + " is " + Arrays.deepToString(piece.getPossibleCoordinates().toArray()));
         }
 
         // sort based on the available coordinates size ASC - means lowest available movements will be at the top
