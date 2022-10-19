@@ -22,6 +22,7 @@ Approach used here will generate all the possible combinations of pieces and app
  ANSWERS
  =========  ==================== ===========
 ```
+* Run ``` mvn test ``` to run the unit tests in the project.
 
 ## Solution
 | boardsize | depth    | number of pieces | number of possibilities | time taken in hh:mm:ss | solution
