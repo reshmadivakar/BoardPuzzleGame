@@ -10,7 +10,6 @@ import com.brs.assignment.strategy.DepthFirstCheckStrategy;
 import com.brs.assignment.strategy.GameStrategy;
 import com.brs.assignment.util.FileUtil;
 import com.brs.assignment.util.TimeUtil;
-import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -39,7 +38,6 @@ public class Main
      */
     public static void main(String[] args)
     {
-        BasicConfigurator.configure();
         List<String> filePathsInFolder = FileUtil.getAllFilePathsInFolder(INPUT_SAMPLES_FOLDER_PATH);
 
         if (filePathsInFolder != null && !filePathsInFolder.isEmpty())
